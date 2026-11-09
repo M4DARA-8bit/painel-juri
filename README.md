@@ -23,14 +23,18 @@ Exemplos:
 
 ## O júri
 
-| Jurado | Critério |
-|--------|----------|
-| `jurado-viabilidade` | Dá para construir com essa stack, prazo e ambiente? |
-| `jurado-custo` | Quanto custa construir, rodar e manter? Existe opção gratuita? |
-| `jurado-seguranca` | Dados pessoais, segredos, permissões, LGPD. **Tem veto.** |
-| `jurado-valor` | Resolve um problema real do usuário pelo caminho mais curto? |
-| `jurado-diabo` | Por que isso vai falhar? Precisa apresentar no mínimo 3 objeções e nunca aprova sem ressalvas. |
-| `relator` | Não vota. Consolida, aplica a regra e expõe as divergências com citação literal. |
+| Jurado | Persona | Critério | Base normativa |
+|--------|---------|----------|----------------|
+| `jurado-viabilidade` | Eng. Marta Quintela | Dá para construir com essa stack, prazo e ambiente? | ISO/IEC 25010:2023, AWS Well-Architected |
+| `jurado-custo` | Contador Rui Barreto | Quanto custa construir, rodar e manter? Existe opção gratuita? | Princípios FinOps, Well-Architected Custo |
+| `jurado-seguranca` | Dra. Helena Prado | Dados pessoais, segredos, permissões. **Tem veto.** | LGPD, Resoluções ANPD 2/2022 e 15/2024, Marco Civil, OWASP Top 10:2025 |
+| `jurado-valor` | Designer Bia Takahashi | Resolve um problema real do usuário pelo caminho mais curto? | Heurísticas de Nielsen, LBI art. 63, WCAG 2.2, eMAG, CDC |
+| `jurado-diabo` | Promotor Otávio Vargas | Por que isso vai falhar? No mínimo 3 objeções; nunca aprova sem ressalvas. | Pre-mortem (Klein, HBR 2007), vieses de planejamento |
+| `relator` | Escrivã Lúcia Mendes | Não vota. Consolida, aplica a regra, expõe divergências e confere as citações de norma. | — |
+
+As personas são fictícias: dão tom e foco a cada voto, nunca autoridade além da evidência.
+
+**Base normativa.** [`.claude/juri/BASE-NORMATIVA.md`](.claude/juri/BASE-NORMATIVA.md) reúne os dispositivos que os jurados podem citar (`[LGPD art. 46]`, `[OWASP A01:2025]`...), com link para o texto oficial e o grau de conferência de cada item. Os jurados não podem inventar artigo, inciso ou prazo, e o relator lista as citações que precisam ser conferidas. O júri aponta riscos de conformidade; não substitui parecer jurídico.
 
 **Independência.** Os jurados rodam em paralelo, cada um lê só o plano e escreve só o próprio voto. Nenhum vê o voto dos outros nem o parecer do revisor.
 
@@ -83,7 +87,7 @@ Sem Python no PC, o coordenador escreve `custos.md` com os totais que cada subag
   agents/        analista, arquiteto, designer, planejador, revisor,
                  jurado-viabilidade, jurado-custo, jurado-seguranca,
                  jurado-valor, jurado-diabo, relator
-  juri/          REGRAS.md, PROCEDIMENTO.md
+  juri/          REGRAS.md, PROCEDIMENTO.md, BASE-NORMATIVA.md
   skills/        planejar, auditar, caveman, megacave, ultracave, caveman-compress
 scripts/
   tokens.py      consumo de tokens por agente
