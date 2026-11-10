@@ -4,10 +4,6 @@ Painel de agentes do Claude Code para planejar e auditar ideias. Um escritório 
 
 Tudo roda dentro do Claude Code, com a sua assinatura. Não há servidor, chave de API nem instalação.
 
-## Painel de Indicadores (`site/`)
-
-Além do painel de agentes, o repositório traz um **site que calcula indicadores de compras a partir de uma planilha**: você arrasta o `.xlsx`, ele reconhece qual base é e monta os KPIs. Roda inteiro no navegador — a planilha nunca sai do computador, não há servidor nem instalação, e funciona até abrindo `site/index.html` por duplo clique. Guia completo: [`site/README.md`](site/README.md).
-
 ## Comandos
 
 | Comando | O que faz | Resultado |

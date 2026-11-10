@@ -1,8 +1,2 @@
 __pycache__/
 *.pyc
-
-# Planilhas reais nunca vão para o repositório: têm razão social, CNPJ e
-# faturamento de fornecedor. O exemplo anônimo de site/exemplos/ é exceção.
-/*.xlsx
-/*.xlsm
-/*.csv
