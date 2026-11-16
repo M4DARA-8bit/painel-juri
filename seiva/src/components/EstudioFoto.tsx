@@ -4,7 +4,7 @@ import { plantas } from '../data/plantas'
 import { cm } from '../lib/formato'
 import { ir } from '../lib/rota'
 import { montagemPadrao, useLoja, useOficina } from '../lib/estado'
-import { Cena3D } from './Cena3D'
+import { Cena3DTardia as Cena3D } from './Cena3DTardia'
 
 type Foto = { url: string; largura: number; altura: number }
 

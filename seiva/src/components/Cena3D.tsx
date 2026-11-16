@@ -3,7 +3,8 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { fatorPorte, montarPlanta } from '../three/planta'
-import { montarVaso, type Montagem } from '../three/vaso'
+import { montarVaso } from '../three/vaso'
+import type { Montagem } from '../data/vasos'
 import { malhaSombra } from '../three/sombra'
 import type { Planta } from '../data/tipos'
 
@@ -31,6 +32,8 @@ export type Props = {
   anguloY?: number
   /** desliga a sombra de contato quando a foto já tem sombra própria */
   opacidadeSombra?: number
+  /** false congela o laço de render: usado quando a cena sai de quadro */
+  ativo?: boolean
 }
 
 function Conjunto({
@@ -159,6 +162,7 @@ export function Cena3D({
   rotulo,
   anguloY = 0,
   opacidadeSombra,
+  ativo = true,
 }: Props) {
   const [animar] = useState(() => !semMovimento())
   const [centro, setCentro] = useState<[number, number, number]>([0, 0.4, 0])
@@ -177,6 +181,7 @@ export function Cena3D({
         shadows={sombra}
         gl={{ alpha: true, antialias: true, preserveDrawingBuffer: !!aoRenderizar }}
         camera={{ fov: 32, near: 0.05, far: 60 }}
+        frameloop={ativo ? 'always' : 'never'}
         onCreated={({ gl }) => {
           gl.setClearAlpha(0)
           gl.toneMapping = THREE.ACESFilmicToneMapping

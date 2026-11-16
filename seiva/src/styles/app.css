@@ -337,6 +337,9 @@ input[type='text'] {
   align-items: center;
 }
 .planta-visor {
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
   background:
     radial-gradient(120% 80% at 50% 5%, rgba(255, 255, 255, 0.9), transparent 60%),
     linear-gradient(170deg, var(--vidro-claro), var(--vidro-fundo));
@@ -600,4 +603,84 @@ input[type='text'] {
 @media (max-width: 720px) {
   .rotina-dia { min-height: 3.4rem; padding: 0.25rem; }
   .rotina-ponto { width: 7px; height: 7px; }
+}
+
+/* ---------- fotos das espécies ---------- */
+.cartao-foto {
+  display: block;
+  width: 100%;
+  height: 238px;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.45s ease, transform 0.6s ease;
+}
+.cartao-foto.is-pronta { opacity: 1; transform: scale(1); }
+.cartao:hover .cartao-foto, .cartao:focus-within .cartao-foto { transform: scale(1.045); }
+.cartao-visor { display: block; }
+
+.planta-foto {
+  display: block;
+  width: 100%;
+  height: min(54vh, 460px);
+  object-fit: cover;
+  border-radius: var(--r-folha);
+}
+.planta-visor-pe {
+  display: flex;
+  padding-top: 0.2rem;
+  border-top: var(--linha);
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--e-2);
+  margin-top: 0.6rem;
+}
+.planta-visor-pe .planta-dica { margin: 0; text-align: right; flex: 1 1 14rem; }
+
+.lista-fotos li { display: grid; grid-template-columns: 64px 1fr; gap: var(--e-2); align-items: center; }
+.lista-fotos img { border-radius: var(--r-caixa); object-fit: cover; }
+.lista-fotos strong { display: block; }
+
+.cena-carregando {
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+.cena-carregando span {
+  width: 42%;
+  max-width: 180px;
+  aspect-ratio: 1;
+  border-radius: var(--r-folha);
+  background: linear-gradient(140deg, rgba(140, 198, 63, 0.3), rgba(63, 122, 46, 0.14));
+  animation: respirar 2.4s ease-in-out infinite;
+}
+@keyframes respirar {
+  0%, 100% { opacity: 0.45; transform: scale(0.97); }
+  50% { opacity: 0.8; transform: scale(1); }
+}
+
+/* filtros recolhíveis: abertos no desktop, fechados em tela estreita */
+.catalogo-recolhe > summary {
+  display: none;
+  cursor: pointer;
+  font-family: var(--fonte-display);
+  font-weight: 700;
+  padding: 0.7rem 0.9rem;
+  border: var(--linha);
+  border-radius: var(--r-caixa);
+  background: var(--vidro-claro);
+}
+.catalogo-recolhe > summary span { float: right; font-family: var(--fonte-corpo); font-weight: 400; font-size: var(--t--1); color: var(--musgo-45); }
+.catalogo-recolhe > summary::marker { content: ''; }
+@media (max-width: 1040px) {
+  .catalogo-recolhe > summary { display: block; }
+  .catalogo-recolhe[open] > summary { margin-bottom: 0.6rem; }
+}
+
+@media (max-width: 440px) {
+  /* a barra não cabe inteira: a marca já leva ao viveiro */
+  .barra-links { gap: 0.75rem; }
+  .barra-links a[href='#catalogo'] { display: none; }
+  .botao--carrinho { padding: 0.45rem 0.75rem; }
 }

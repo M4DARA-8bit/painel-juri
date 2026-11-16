@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { Montagem } from '../three/vaso'
-import { precoMontagem } from '../three/vaso'
+import { precoMontagem, type Montagem } from '../data/vasos'
 import { plantas } from '../data/plantas'
 
 export const montagemPadrao: Montagem = {

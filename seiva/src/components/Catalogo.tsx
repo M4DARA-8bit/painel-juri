@@ -1,18 +1,35 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { plantas } from '../data/plantas'
-import { aplicar, filtrosVazios, type Filtros as TipoFiltros } from '../lib/filtros'
+import { aplicar, contarAtivos, filtrosVazios, type Filtros as TipoFiltros } from '../lib/filtros'
 import { Cartao } from './Cartao'
 import { Filtros } from './Filtros'
-import { Cena3D } from './Cena3D'
+import { Cena3DTardia as Cena3D } from './Cena3DTardia'
 import { ir } from '../lib/rota'
 import { montagemPadrao } from '../lib/estado'
-import { formasVaso, materiaisVaso, type Montagem } from '../three/vaso'
+import { formasVaso, materiaisVaso, type Montagem } from '../data/vasos'
 import { FundoGavinhas } from './FundoGavinhas'
+import { useEmQuadro } from '../lib/emQuadro'
+
+/** Em tela estreita o painel de filtros empurrava o catálogo para fora da vista. */
+function useEstreito() {
+  const [estreito, setEstreito] = useState(
+    () => typeof matchMedia === 'function' && matchMedia('(max-width: 1040px)').matches,
+  )
+  useEffect(() => {
+    const mq = matchMedia('(max-width: 1040px)')
+    const ao = () => setEstreito(mq.matches)
+    mq.addEventListener('change', ao)
+    return () => mq.removeEventListener('change', ao)
+  }, [])
+  return estreito
+}
 
 export function Catalogo() {
   const [filtros, setFiltros] = useState<TipoFiltros>(filtrosVazios)
   const lista = useMemo(() => aplicar(plantas, filtros), [filtros])
+  const estreito = useEstreito()
+  const ativos = contarAtivos(filtros)
 
   return (
     <>
@@ -27,7 +44,13 @@ export function Catalogo() {
         </div>
         <div className="catalogo-grade">
           <aside className="catalogo-rail">
-            <Filtros filtros={filtros} mudar={setFiltros} resultados={lista.length} />
+            <details className="catalogo-recolhe" open={!estreito}>
+              <summary>
+                Filtros
+                <span>{ativos ? `${ativos} ativo${ativos > 1 ? 's' : ''}` : `${lista.length} plantas`}</span>
+              </summary>
+              <Filtros filtros={filtros} mudar={setFiltros} resultados={lista.length} />
+            </details>
           </aside>
           <div className="catalogo-cartoes">
             {lista.map((p, i) => (
@@ -58,6 +81,7 @@ function Heroi() {
   const semMovimento = useReducedMotion()
   const [i, setI] = useState(0)
   const [montagem, setMontagem] = useState<Montagem>({ ...montagemPadrao, diametroCm: 22 })
+  const palco = useEmQuadro<HTMLDivElement>('0px')
   const planta = plantas.find((p) => p.id === destaques[i])!
 
   return (
@@ -96,14 +120,16 @@ function Heroi() {
           </dl>
         </div>
 
-        <div className="heroi-palco">
+        <div className="heroi-palco" ref={palco.ref}>
           <div className="heroi-vidro">
           <Cena3D
             planta={planta}
             montagem={montagem}
             altura="min(58vh, 460px)"
+            esperaMs={1200}
             interativo
-            girar={!semMovimento}
+            ativo={palco.visivel}
+            girar={!semMovimento && palco.visivel}
             rotulo={`Modelo 3D de ${planta.nome}, girável`}
           />
           </div>

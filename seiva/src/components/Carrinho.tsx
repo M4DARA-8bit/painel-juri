@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { plantas } from '../data/plantas'
 import { brl } from '../lib/formato'
 import { useLoja } from '../lib/estado'
-import { formasVaso, materiaisVaso, suportes } from '../three/vaso'
+import { formasVaso, materiaisVaso, suportes } from '../data/vasos'
 
 export function Carrinho() {
   const { itens, gaveta, abrirGaveta, remover, mudarQuantidade, total } = useLoja()

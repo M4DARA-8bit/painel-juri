@@ -1,4 +1,5 @@
 import { plantas } from '../data/plantas'
+import { fotos } from '../data/fotos'
 
 export function PaginaCuidado() {
   const todas = new Map<string, { titulo: string; veiculo: string; url: string; usos: string[] }>()
@@ -59,6 +60,33 @@ export function PaginaCuidado() {
         fontes de cada ficha. “Tóxica” aqui quer dizer que mastigar causa irritação ou mal-estar, não
         que a presença da planta no ambiente faça mal. Na dúvida, mantenha fora do alcance.
       </p>
+
+      <h2>As fotos</h2>
+      <p>
+        Cada espécie aparece com uma foto de licença livre do Wikimedia Commons, recortada em
+        quadrado. O autor e a licença de cada uma estão abaixo e também na página da planta. Os
+        modelos 3D continuam no montador e no estúdio de foto: eles mostram a forma e a escala da
+        espécie, não o exemplar que será enviado.
+      </p>
+      <ul className="lista-fontes lista-fotos">
+        {plantas.map((p) => {
+          const f = fotos[p.id]
+          return (
+            <li key={p.id}>
+              <img src={f.pequena} alt="" width={64} height={64} loading="lazy" decoding="async" />
+              <span>
+                <strong>{p.nome}</strong>
+                <span className="nota">
+                  {f.autor} — {f.licenca} —{' '}
+                  <a href={f.pagina} target="_blank" rel="noopener noreferrer">
+                    {f.original}
+                  </a>
+                </span>
+              </span>
+            </li>
+          )
+        })}
+      </ul>
 
       <h2>Todas as fontes usadas</h2>
       <ul className="lista-fontes">

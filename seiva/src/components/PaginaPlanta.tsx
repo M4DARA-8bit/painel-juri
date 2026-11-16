@@ -1,16 +1,19 @@
+import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { plantas } from '../data/plantas'
 import { rotuloLuz } from '../data/tipos'
 import { brl, faixaCm, textoRega, vezesPorMes } from '../lib/formato'
 import { ir } from '../lib/rota'
 import { montagemPadrao, useOficina } from '../lib/estado'
-import { Cena3D } from './Cena3D'
+import { Cena3DTardia as Cena3D } from './Cena3DTardia'
+import { fotos } from '../data/fotos'
 import { EtiquetaPet, Fontes, MedidorCheiro, MedidorLuz, MedidorRega } from './Medidores'
 
 export function PaginaPlanta({ id }: { id: string }) {
   const planta = plantas.find((p) => p.id === id)
   const montagem = useOficina((s) => s.porPlanta[id]) ?? montagemPadrao
   const semMovimento = useReducedMotion()
+  const [modelo, setModelo] = useState(false)
 
   if (!planta) {
     return (
@@ -30,14 +33,42 @@ export function PaginaPlanta({ id }: { id: string }) {
     <article className="pagina-planta">
       <div className="recuo planta-topo">
         <div className="planta-visor">
-          <Cena3D
-            planta={planta}
-            montagem={montagem}
-            altura="min(62vh, 520px)"
-            interativo
-            girar={!semMovimento}
-          />
-          <p className="planta-dica">Arraste para girar, use a roda para aproximar.</p>
+          {modelo ? (
+            <Cena3D
+              planta={planta}
+              montagem={montagem}
+              altura="min(54vh, 460px)"
+              interativo
+              girar={!semMovimento}
+            />
+          ) : (
+            <img
+              className="planta-foto"
+              src={fotos[planta.id].arquivo}
+              srcSet={`${fotos[planta.id].pequena} 560w, ${fotos[planta.id].arquivo} 1000w`}
+              sizes="(max-width: 1040px) 92vw, 620px"
+              width={1000}
+              height={1000}
+              alt={`${planta.nome} (${planta.cientifico})`}
+            />
+          )}
+          <div className="planta-visor-pe">
+            <button className="botao botao--texto" onClick={() => setModelo((v) => !v)}>
+              {modelo ? 'Voltar para a foto' : 'Ver o modelo 3D'}
+            </button>
+            <p className="planta-dica">
+              {modelo ? (
+                'Arraste para girar, use a roda para aproximar.'
+              ) : (
+                <>
+                  Foto: {fotos[planta.id].autor}, {fotos[planta.id].licenca},{' '}
+                  <a href={fotos[planta.id].pagina} target="_blank" rel="noopener noreferrer">
+                    via Wikimedia Commons
+                  </a>
+                </>
+              )}
+            </p>
+          </div>
         </div>
 
         <motion.div

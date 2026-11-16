@@ -2,14 +2,15 @@ import { plantas } from '../data/plantas'
 import { brl } from '../lib/formato'
 import { ir } from '../lib/rota'
 import { montagemPadrao, useLoja, useOficina } from '../lib/estado'
-import { Cena3D } from './Cena3D'
+import { Cena3DTardia as Cena3D } from './Cena3DTardia'
+import { useEmQuadro } from '../lib/emQuadro'
 import {
   formasVaso,
   materiaisVaso,
   precoMontagem,
   suportes,
   type Montagem,
-} from '../three/vaso'
+} from '../data/vasos'
 
 const DIAMETROS = [12, 15, 18, 22, 26, 32]
 
@@ -23,6 +24,7 @@ export function Montador({ id }: { id: string }) {
   const definir = useOficina((s) => s.definir)
   const montagem = useOficina((s) => s.porPlanta[id]) ?? montagemPadrao
   const adicionar = useLoja((s) => s.adicionar)
+  const palco = useEmQuadro<HTMLDivElement>('0px')
 
   if (!planta) return null
 
@@ -34,8 +36,14 @@ export function Montador({ id }: { id: string }) {
   return (
     <section className="montador">
       <div className="recuo montador-grade">
-        <div className="montador-palco">
-          <Cena3D planta={planta} montagem={montagem} altura="min(66vh, 560px)" interativo />
+        <div className="montador-palco" ref={palco.ref}>
+          <Cena3D
+            planta={planta}
+            montagem={montagem}
+            altura="min(66vh, 560px)"
+            interativo
+            ativo={palco.visivel}
+          />
           <p className="planta-dica">
             {planta.nome} em vaso de {montagem.diametroCm} cm, {material.nome.toLowerCase()}
             {montagem.suporte !== 'nenhum' ? `, com ${suporte.nome.toLowerCase()}` : ''}.

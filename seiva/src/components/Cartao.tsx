@@ -1,60 +1,51 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import type { Planta } from '../data/tipos'
 import { brl, faixaCm } from '../lib/formato'
 import { ir } from '../lib/rota'
-import { Cena3D } from './Cena3D'
+import { fotos } from '../data/fotos'
 import { EtiquetaPet, MedidorCheiro, MedidorLuz, MedidorRega } from './Medidores'
-import { montagemPadrao, useOficina } from '../lib/estado'
 
-/** Monta a cena só quando o cartão entra em quadro: 12 canvas ao mesmo tempo pesa. */
-function useEmQuadro<T extends HTMLElement>() {
-  const ref = useRef<T | null>(null)
-  const [visivel, setVisivel] = useState(false)
-  useEffect(() => {
-    const no = ref.current
-    if (!no || visivel) return
-    const obs = new IntersectionObserver(
-      (e) => e.forEach((x) => x.isIntersecting && setVisivel(true)),
-      { rootMargin: '220px' },
-    )
-    obs.observe(no)
-    return () => obs.disconnect()
-  }, [visivel])
-  return { ref, visivel }
-}
-
+/**
+ * Cartão com foto da espécie. A cena 3D ficou fora daqui de propósito:
+ * doze telas WebGL abertas ao mesmo tempo travavam a rolagem. O modelo
+ * continua na página da planta, no montador e no estúdio de foto.
+ */
 export function Cartao({ planta, indice }: { planta: Planta; indice: number }) {
-  const { ref, visivel } = useEmQuadro<HTMLElement>()
-  const [sobre, setSobre] = useState(false)
   const semMovimento = useReducedMotion()
-  const montagem = useOficina((s) => s.porPlanta[planta.id]) ?? montagemPadrao
+  const [carregada, setCarregada] = useState(false)
+  const foto = fotos[planta.id]
 
   return (
     <motion.article
-      ref={ref as never}
       className="cartao"
       initial={semMovimento ? false : { opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: Math.min(indice * 0.05, 0.4), ease: [0.2, 0.7, 0.2, 1] }}
-      onPointerEnter={() => setSobre(true)}
-      onPointerLeave={() => setSobre(false)}
-      onFocus={() => setSobre(true)}
-      onBlur={() => setSobre(false)}
     >
-      <div className="cartao-visor">
-        {visivel ? (
-          <Cena3D
-            planta={planta}
-            montagem={montagem}
-            altura={238}
-            girar={sobre && !semMovimento}
-            rotulo={`Modelo 3D de ${planta.nome}`}
-          />
-        ) : (
-          <div className="cartao-visor-vazio" aria-hidden="true" />
-        )}
-      </div>
+      <a
+        className="cartao-visor"
+        href={`#planta/${planta.id}`}
+        onClick={(e) => {
+          e.preventDefault()
+          ir(`planta/${planta.id}`)
+        }}
+        tabIndex={-1}
+        aria-hidden="true"
+      >
+        <img
+          src={foto.pequena}
+          srcSet={`${foto.pequena} 560w, ${foto.arquivo} 1000w`}
+          sizes="(max-width: 720px) 92vw, 300px"
+          alt=""
+          width={560}
+          height={560}
+          loading={indice < 3 ? 'eager' : 'lazy'}
+          decoding="async"
+          className={'cartao-foto' + (carregada ? ' is-pronta' : '')}
+          onLoad={() => setCarregada(true)}
+        />
+      </a>
 
       <div className="cartao-corpo">
         <header className="cartao-cabeca">

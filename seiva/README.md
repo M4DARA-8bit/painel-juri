@@ -21,6 +21,19 @@ npm run preview  # serve dist/ em http://localhost:4173
 | Rotina de rega | `#/rotina` | calendário de 4 semanas montado a partir do intervalo de cada espécie, com início escalonado por planta, destaque por espécie e contagem da semana |
 | Fontes | `#/cuidado` | método de apuração e lista completa das referências |
 
+## As fotos e os modelos 3D
+
+Cada espécie tem uma foto de licença livre do Wikimedia Commons, recortada em
+quadrado em duas larguras (560 px no cartão, 1000 px na página). Autor, licença
+e link do arquivo original estão em `src/data/fotos.ts`, aparecem embaixo da foto
+na página da planta e na lista da página de fontes.
+
+O catálogo mostra foto, não modelo: doze telas WebGL abertas ao mesmo tempo
+travavam a rolagem. O modelo 3D ficou onde ele faz diferença — botão "Ver o
+modelo 3D" na página da planta, montador e estúdio de foto — e o `three.js` virou
+um pedaço separado do pacote, baixado só quando alguma cena monta. Cenas fora de
+quadro congelam o laço de render.
+
 ## Os modelos 3D
 
 Não há arquivo `.glb` nem foto de banco de imagem. Cada planta é construída em
