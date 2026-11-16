@@ -18,6 +18,7 @@ npm run preview  # serve dist/ em http://localhost:4173
 | Ficha | `#/planta/<id>` | tamanho, rega, luz, ambiente, cheiro, o que agrega, melhor lugar, segurança com pets — cada campo com o número da fonte |
 | Montagem | `#/montador/<id>` | 6 formas de vaso × 7 acabamentos × cor livre × 6 diâmetros × 7 suportes × prato, com preço recalculado |
 | No meu espaço | `#/foto/<id>` | câmera ou foto do rolo, planta posicionável por arraste, ajuste de escala, giro, direção e força da luz, sombra; baixa a composição em PNG |
+| Rotina de rega | `#/rotina` | calendário de 4 semanas montado a partir do intervalo de cada espécie, com início escalonado por planta, destaque por espécie e contagem da semana |
 | Fontes | `#/cuidado` | método de apuração e lista completa das referências |
 
 ## Os modelos 3D

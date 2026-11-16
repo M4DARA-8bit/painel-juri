@@ -530,5 +530,74 @@ input[type='text'] {
   .heroi-dados div { grid-template-columns: 1fr; gap: 0.1rem; }
   .barra-links { gap: var(--e-2); font-size: 0.78rem; }
   .marca small { display: none; }
+  .so-largo { display: none; }
+  .barra-links a { white-space: nowrap; }
   .catalogo-cartoes { grid-template-columns: 1fr; }
+}
+
+/* ---------- rotina de rega ---------- */
+.rotina { padding: var(--e-4) 0 var(--e-6); }
+.rotina-cabeca { max-width: 62ch; margin-bottom: var(--e-4); }
+.rotina-cabeca h1 { font-size: clamp(1.9rem, 4vw, var(--t-4)); }
+.rotina-cabeca p { margin-top: var(--e-2); color: var(--musgo-70); }
+.rotina-grade { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: var(--e-4); align-items: start; }
+
+.rotina-resumo { font-family: var(--fonte-display); font-weight: 700; font-size: var(--t-1); margin: 0 0 var(--e-2); }
+.rotina-resumo strong { color: var(--agua); }
+.rotina-resumo-filtro { display: block; font-family: var(--fonte-corpo); font-weight: 400; font-size: var(--t--1); color: var(--musgo-45); }
+
+.rotina-cabecalho-dias,
+.rotina-dias { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.rotina-cabecalho-dias { margin-bottom: 4px; font-size: var(--t--1); color: var(--musgo-45); padding-left: 2px; }
+.rotina-dias { list-style: none; margin: 0; padding: 0; }
+.rotina-dia {
+  position: relative;
+  min-height: 4.6rem;
+  padding: 0.35rem 0.4rem;
+  border: var(--linha);
+  border-radius: var(--r-caixa);
+  background: color-mix(in srgb, var(--vidro-claro) 78%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: opacity 0.18s, border-color 0.18s;
+}
+.rotina-dia.is-passado { opacity: 0.45; }
+.rotina-dia.is-apagado { opacity: 0.25; }
+.rotina-dia.is-hoje { border-color: var(--musgo); border-width: 2px; }
+.rotina-dia.is-hoje .rotina-numero { color: var(--musgo); font-weight: 600; }
+.rotina-numero { font-size: var(--t--1); color: var(--musgo-45); font-variant-numeric: tabular-nums; }
+.rotina-pontos { display: flex; flex-wrap: wrap; gap: 3px; }
+.rotina-ponto { width: 9px; height: 9px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); }
+
+.rotina-legenda h2 { font-size: var(--t-1); margin-bottom: var(--e-2); }
+.rotina-legenda ul { list-style: none; margin: 0 0 var(--e-2); padding: 0; border-top: var(--linha); }
+.rotina-legenda li { border-bottom: var(--linha); opacity: 0.45; }
+.rotina-legenda li.is-dentro { opacity: 1; }
+.rotina-linha {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 0.8rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.2rem;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.rotina-linha:hover { background: var(--musgo-08); }
+.rotina-linha.is-fixada { background: color-mix(in srgb, var(--clorofila-claro) 22%, transparent); }
+.rotina-cor { width: 0.8rem; height: 0.8rem; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); }
+.rotina-nome { display: grid; font-size: var(--t-0); }
+.rotina-nome em { font-size: var(--t--1); color: var(--musgo-45); }
+.rotina-intervalo { display: grid; justify-items: end; font-size: var(--t--1); }
+.rotina-intervalo small { color: var(--musgo-45); }
+
+@media (max-width: 1040px) {
+  .rotina-grade { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .rotina-dia { min-height: 3.4rem; padding: 0.25rem; }
+  .rotina-ponto { width: 7px; height: 7px; }
 }

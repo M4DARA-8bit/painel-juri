@@ -6,6 +6,7 @@ import { EstudioFoto } from './components/EstudioFoto'
 import { Montador } from './components/Montador'
 import { PaginaCuidado } from './components/PaginaCuidado'
 import { PaginaPlanta } from './components/PaginaPlanta'
+import { Rotina } from './components/Rotina'
 
 export default function App() {
   const rota = useRota()
@@ -44,6 +45,15 @@ export default function App() {
               Viveiro
             </a>
             <a
+              href="#rotina"
+              onClick={(e) => {
+                e.preventDefault()
+                ir('rotina')
+              }}
+            >
+              Rotina<span className="so-largo"> de rega</span>
+            </a>
+            <a
               href="#cuidado"
               onClick={(e) => {
                 e.preventDefault()
@@ -66,6 +76,7 @@ export default function App() {
         {rota.tela === 'montador' && <Montador id={rota.id} />}
         {rota.tela === 'foto' && <EstudioFoto id={rota.id} />}
         {rota.tela === 'cuidado' && <PaginaCuidado />}
+        {rota.tela === 'rotina' && <Rotina />}
       </main>
 
       <footer className="rodape">

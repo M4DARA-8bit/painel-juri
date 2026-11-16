@@ -6,6 +6,7 @@ export type Rota =
   | { tela: 'montador'; id: string }
   | { tela: 'foto'; id: string }
   | { tela: 'cuidado' }
+  | { tela: 'rotina' }
 
 export function lerRota(): Rota {
   const h = location.hash.replace(/^#\/?/, '')
@@ -14,6 +15,7 @@ export function lerRota(): Rota {
   if (tela === 'montador' && id) return { tela: 'montador', id }
   if (tela === 'foto' && id) return { tela: 'foto', id }
   if (tela === 'cuidado') return { tela: 'cuidado' }
+  if (tela === 'rotina') return { tela: 'rotina' }
   return { tela: 'catalogo' }
 }
 
