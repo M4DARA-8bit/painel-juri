@@ -1,0 +1,118 @@
+/* Seiva — sistema de design "estufa úmida".
+   Base de vidro de estufa, texto musgo, clorofila para ação,
+   antocianina só para o que é raro (cheiro, destaque único),
+   ocre para medir luz, terra para vaso. */
+:root {
+  --vidro: #e7ede4;
+  --vidro-claro: #f3f7f1;
+  --vidro-fundo: #dde5d9;
+  --musgo: #17301f;
+  --musgo-70: rgba(23, 48, 31, 0.7);
+  --musgo-45: rgba(23, 48, 31, 0.45);
+  --musgo-18: rgba(23, 48, 31, 0.18);
+  --musgo-08: rgba(23, 48, 31, 0.08);
+  --clorofila: #3f7a2e;
+  --clorofila-claro: #8cc63f;
+  --antocianina: #c7347a;
+  --ocre: #d59a2b;
+  --terra: #6b4a35;
+  --agua: #2f6f86;
+
+  --fonte-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
+  --fonte-corpo: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+
+  /* escala tipográfica 1.25 a partir de 17px */
+  --t--1: 0.8rem;
+  --t-0: 1.0625rem;
+  --t-1: 1.33rem;
+  --t-2: 1.66rem;
+  --t-3: 2.07rem;
+  --t-4: 2.59rem;
+  --t-5: 3.24rem;
+  --t-6: 4.05rem;
+
+  --e-1: 0.5rem;
+  --e-2: 0.875rem;
+  --e-3: 1.5rem;
+  --e-4: 2.5rem;
+  --e-5: 4rem;
+  --e-6: 6.5rem;
+
+  /* raio varia por hierarquia, de propósito */
+  --r-etiqueta: 2px;
+  --r-caixa: 4px;
+  --r-botao: 999px;
+  --r-folha: 48% 52% 44% 56% / 58% 46% 54% 42%;
+
+  --linha: 1px solid var(--musgo-18);
+  --sombra-vidro: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 12px 28px -24px rgba(23, 48, 31, 0.55);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--vidro);
+  color: var(--musgo);
+  font-family: var(--fonte-corpo);
+  font-size: var(--t-0);
+  line-height: 1.55;
+  font-feature-settings: 'ss01' on;
+  background-image:
+    radial-gradient(120% 70% at 82% -10%, rgba(140, 198, 63, 0.18), transparent 60%),
+    radial-gradient(90% 60% at 4% 102%, rgba(47, 111, 134, 0.12), transparent 65%);
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--fonte-display);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p { margin: 0 0 var(--e-2); max-width: 66ch; }
+
+a { color: inherit; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+
+:where(button, a, input, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--antocianina);
+  outline-offset: 3px;
+  border-radius: var(--r-caixa);
+}
+
+::selection { background: var(--clorofila-claro); color: var(--musgo); }
+
+.recuo { width: min(1240px, 100% - 2.5rem); margin-inline: auto; }
+
+.pulo-conteudo {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--musgo);
+  color: var(--vidro-claro);
+  padding: 0.75rem 1rem;
+  z-index: 100;
+}
+.pulo-conteudo:focus { left: 1rem; top: 1rem; }
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
