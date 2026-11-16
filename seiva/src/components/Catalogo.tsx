@@ -8,6 +8,7 @@ import { Cena3D } from './Cena3D'
 import { ir } from '../lib/rota'
 import { montagemPadrao } from '../lib/estado'
 import { formasVaso, materiaisVaso, type Montagem } from '../three/vaso'
+import { FundoGavinhas } from './FundoGavinhas'
 
 export function Catalogo() {
   const [filtros, setFiltros] = useState<TipoFiltros>(filtrosVazios)
@@ -61,6 +62,7 @@ function Heroi() {
 
   return (
     <header className="heroi">
+      <FundoGavinhas />
       <div className="recuo heroi-grade">
         <div className="heroi-texto">
           <motion.h1

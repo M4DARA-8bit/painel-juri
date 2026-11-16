@@ -84,7 +84,17 @@
 }
 
 /* ---------- herói ---------- */
-.heroi { padding: var(--e-5) 0 var(--e-4); }
+.heroi { padding: var(--e-5) 0 var(--e-4); position: relative; isolation: isolate; }
+.gavinhas {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background: radial-gradient(85% 60% at 20% 40%, rgba(140, 198, 63, 0.1), transparent 70%);
+}
+.gavinhas canvas { position: absolute; inset: 0; }
+.heroi-grade { position: relative; }
 .heroi-grade {
   display: grid;
   grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr);

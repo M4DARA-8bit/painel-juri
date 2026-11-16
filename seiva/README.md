@@ -34,6 +34,20 @@ folhas opostas. O vaso e o suporte saem de perfis de revolução em
 Consequência prática: o modelo mostra a forma e a escala reais da espécie, não o
 exemplar que será enviado. Isso está dito no rodapé do site.
 
+## O fundo do herói
+
+As gavinhas que crescem atrás do título são Canvas 2D gerado em
+`src/lib/gavinhas.ts` e montado em `src/components/FundoGavinhas.tsx`: pontas de
+ramo com ruído de direção, bifurcação por probabilidade, espirais e folhas que se
+abrem em 700 ms. Elas desviam de uma elipse em volta do texto, param quando
+atingem o orçamento de comprimento, pausam fora de quadro e, sob
+`prefers-reduced-motion`, aparecem já crescidas, sem animação.
+
+A ideia e os parâmetros vêm do prompt gratuito
+[Growing Vine Tendrils](https://animatedwebs.com/templates/greenhouse-grants-growing-vines),
+do AnimatedWebs, reescrito na paleta do Seiva. Licença do prompt: uso pessoal e
+comercial liberado, revenda do prompt não.
+
 ## Os dados e as fontes
 
 Tudo vive em `src/data/plantas.ts`. Cada campo da ficha é um objeto
